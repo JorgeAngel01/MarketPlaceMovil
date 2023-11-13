@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import * as SecureStore from "expo-secure-store";
+import { handleShowError } from "../helpers/handleShowError";
 
 const AuthContext = createContext();
 
@@ -17,7 +18,14 @@ const AuthProvider = ({ children }) => {
   }
 
   const handleLogin = async (username, password) => {
+
     try {
+
+      if (username === "" || password === "") {
+        handleShowError("Por favor, ingrese su usuario y contraseña.");
+        return;
+      }
+
       // Authenticate user through API
       const response = await fetch(`https://marketplace-ylae.onrender.com/login/`, {
         method: "POST",

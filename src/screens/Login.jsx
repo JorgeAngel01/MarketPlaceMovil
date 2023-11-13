@@ -44,7 +44,10 @@ const Login = () => {
             />
           </View>
           <View style={styles.buttonContainer}>
-            <CustomButton text="Login" onPress={() => handleLogin(username, password)} />
+            <CustomButton
+              text="Login"
+              onPress={() => handleLogin(username, password)}
+            />
             <TouchableOpacity onPress={() => navigation.navigate("")}>
               <Text style={styles.link}>Forgot Password?</Text>
             </TouchableOpacity>
