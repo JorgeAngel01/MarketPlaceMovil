@@ -18,29 +18,37 @@ const AuthProvider = ({ children }) => {
   }
 
   const handleLogin = async (username, password) => {
-
     try {
-
       if (username === "" || password === "") {
         handleShowError("Por favor, ingrese su usuario y contraseña.");
         return;
       }
 
       // Authenticate user through API
-      const response = await fetch(`https://marketplace-ylae.onrender.com/login/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
+      const response = await fetch(
+        `https://marketplace-ylae.onrender.com/login/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }
+      );
+      console.log(JSON.stringify({ username, password }));
 
-      // Store token in secure storage if successful
       const data = await response.json();
-
-      if (data.token) {
-        await storeToken("token", data.token);
-        setIsAuthenticated(true);
+      console.log(data);
+      if (response.ok) {
+        // Store token in secure storage if successful
+        if (data.token) {
+          await storeToken("token", data.token);
+          setIsAuthenticated(true);
+        }
+      } else if (response.status === 400) {
+        handleShowError("Usuario o contraseña incorrectos.");
+      } else {
+        handleShowError("Ha ocurrido un error. Por favor, intente nuevamente.");
       }
     } catch (error) {
       console.log(error);
@@ -48,8 +56,72 @@ const AuthProvider = ({ children }) => {
   };
 
   const handleLogout = () => {
-    setUser(null);
-    setIsAuthenticated(false);
+    let token = getToken("token");
+    if (token) {
+      setUser(null);
+      setIsAuthenticated(false);
+      SecureStore.deleteItemAsync("token");
+    }
+  };
+
+  const handleRegister = async (
+    username,
+    email,
+    first_name,
+    last_name,
+    password,
+    confirmPassword
+  ) => {
+    try {
+      if (
+        username === "" ||
+        email === "" ||
+        first_name === "" ||
+        last_name === "" ||
+        password === "" ||
+        confirmPassword === ""
+      ) {
+        handleShowError("Por favor, complete todos los campos.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        handleShowError("Las contraseñas no coinciden.");
+        return;
+      }
+
+      const response = await fetch(
+        `https://marketplace-ylae.onrender.com/registro/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            email,
+            first_name,
+            last_name,
+            password,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        if (data.token) {
+          await storeToken("token", data.token);
+          setIsAuthenticated(true);
+        }
+      } else if (response.status === 400) {
+        handleShowError("Alguno de los datos ingresados es incorrecto.");
+      } else {
+        handleShowError("Ha ocurrido un error. Por favor, intente nuevamente.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getUser = async () => {
@@ -69,6 +141,7 @@ const AuthProvider = ({ children }) => {
     isAuthenticated,
     handleLogin,
     handleLogout,
+    handleRegister,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
