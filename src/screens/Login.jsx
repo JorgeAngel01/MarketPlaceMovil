@@ -23,13 +23,13 @@ const Login = () => {
   const navigation = useNavigation();
 
   const handleLoginPress = async () => {
-    setIsLoading(true);
     setError(null);
+    setIsLoading(true);
 
     try {
       await handleLogin(username, password);
     } catch (error) {
-      setError("Invalid username or password"); 
+      setError("Invalid username or password");
     } finally {
       setIsLoading(false);
     }

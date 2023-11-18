@@ -33,8 +33,15 @@ const Register = () => {
 
   const handleSignUpPress = async () => {
     setIsLoading(true);
-    await handleRegister(username, email, name, lastname, password, confirmPassword);
-    setIsLoading(false);
+    try {
+      await handleRegister(username, email, name, lastname, password, confirmPassword);
+    }
+    catch (error) {
+      console.error(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
   };
 
   return (
