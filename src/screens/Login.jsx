@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import ScreenContainer from "../components/layout/ScreenContainer";
 import { useNavigation } from "@react-navigation/native";
@@ -17,7 +18,22 @@ const Login = () => {
   const { handleLogin } = useAuthContext();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigation = useNavigation();
+
+  const handleLoginPress = async () => {
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      await handleLogin(username, password);
+    } catch (error) {
+      setError("Invalid username or password");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <ScreenContainer>
@@ -45,16 +61,18 @@ const Login = () => {
           </View>
           <View style={styles.buttonContainer}>
             <CustomButton
-              text="Login"
-              onPress={() => handleLogin(username, password)}
+              text={isLoading ? "Logging In..." : "Login"}
+              onPress={handleLoginPress}
+              disabled={isLoading}
             />
+            {error && <Text style={styles.errorText}>{error}</Text>}
             <TouchableOpacity onPress={() => navigation.navigate("")}>
               <Text style={styles.link}>Forgot Password?</Text>
             </TouchableOpacity>
           </View>
         </View>
         <View style={styles.bottomLinkContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate("")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
             <Text style={styles.link}>
               <Text>Don't have an account? </Text>
               <Text style={{ color: "#ffcb13", fontWeight: "bold" }}>
@@ -93,8 +111,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   link: {
+    fontSize: 12,
     color: "white",
     textAlign: "center",
+  },
+  errorText: {
+    color: "red",
+    textAlign: "center",
+    marginTop: 10,
   },
 });
 

@@ -4,6 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "../screens/Login";
 import { useAuthContext } from "../hooks/useAuthContext";
+import Register from "../screens/Register";
+import Home from "../screens/logedScreens/Home";
 
 const Stack = createStackNavigator();
 
@@ -14,19 +16,20 @@ const NavigationHolder = () => {
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
   useEffect(() => {
-    delay(2000).then(() => setLoading(false)); // Set loading to false after 2000ms (2 seconds)
+    delay(1000).then(() => setLoading(false)); // Set loading to false after 2000ms (2 seconds)
   }, []);
 
   const mainNavigation = () => {
     return isAuthenticated ? (
       <>
-        <Stack.Screen name="Login" component={Login} />
-        
-      
+        <Stack.Screen name="Home" component={Home} />
       </>
     ) : (
+      <>
       <Stack.Screen name="Login" component={Login} />
-    );
+      <Stack.Screen name="Register" component={Register} />
+      </>
+      );
   };
 
   return loading ? (
