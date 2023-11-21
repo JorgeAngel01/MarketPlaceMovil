@@ -5,7 +5,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Login from "../screens/Login";
 import { useAuthContext } from "../hooks/useAuthContext";
 import Register from "../screens/Register";
-import Home from "../screens/logedScreens/Home";
+import BottomTabsHome from "./BottomTabsHome";
+import ProfileScreen from "../screens/logedScreens/ProfileScreen";
+import { CartProvider } from "../context/CartContext";
+import CartScreen from "../screens/logedScreens/CartScreen";
+import RestaurantDetails from "../screens/logedScreens/RestaurantDetailsScreen";
 
 const Stack = createStackNavigator();
 
@@ -22,14 +26,31 @@ const NavigationHolder = () => {
   const mainNavigation = () => {
     return isAuthenticated ? (
       <>
-        <Stack.Screen name="Home" component={Home} />
+        <CartProvider>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen name="BottomTabs" component={BottomTabsHome} />
+            <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen name="Cart" component={CartScreen} />
+            <Stack.Screen name="RestaurantDetails" component={RestaurantDetails} />
+          </Stack.Navigator>
+        </CartProvider>
       </>
     ) : (
       <>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Register" component={Register} />
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Register" component={Register} />
+        </Stack.Navigator>
       </>
-      );
+    );
   };
 
   return loading ? (
@@ -37,16 +58,21 @@ const NavigationHolder = () => {
       <ActivityIndicator size="large" color="#00ff00" />
     </View>
   ) : (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        {mainNavigation()}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <NavigationContainer>{mainNavigation()}</NavigationContainer>
   );
 };
 
 export default NavigationHolder;
+
+/*
+<Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        
+        {mainNavigation()}
+       
+      </Stack.Navigator>
+      
+      */

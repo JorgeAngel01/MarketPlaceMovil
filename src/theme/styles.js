@@ -1,11 +1,30 @@
 export const THEME = {
-    colors: {
-        primary: '#ff0000',
-        secondary: '#00ff00',
+    COLORS: {
+      PRIMARY: '#191919',
+      SECONDARY: '#EC0B43',
+      BLACK: {
+        BLACK: '#000000',
+        EERIE: '#191919',
+      },
+      WHITE: {
+        WHITE: '#FFFFFF',
+        POWDER: '#FDFFFC',
+      },
+      YELLOW: {
+        JONQUIL: '#FFCB13',
+      },
+      RED: {
+        MUNSELL: '#EC0B43',
+      },
+      GREEN: {},
+      BLUE: {},
     },
-    fonts: {
-        regular: 'Roboto, sans-serif',
-        medium: 'Roboto, sans-serif',
-        bold: 'Roboto, sans-serif',
-    },  
-};
+    FONTS: {
+      REGULAR: 'Roboto, sans-serif',
+      MEDIUM: 'Roboto, sans-serif',
+      BOLD: 'Roboto, sans-serif',
+    },
+  };
+
+
+  
