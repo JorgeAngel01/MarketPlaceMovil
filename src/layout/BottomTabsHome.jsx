@@ -6,6 +6,7 @@ import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
 import { THEME } from "../theme/styles";
 import ProfileScreen from "../screens/logedScreens/ProfileScreen";
+import ProveedorScreen from "../screens/logedScreens/ProveedorScreen";
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -44,8 +45,8 @@ const BottomTabsHome = () => {
           }}
         />
         <Tab.Screen
-          name="Home2"
-          component={ProfileScreen}
+          name="Grocery"
+          component={ProveedorScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -63,7 +64,7 @@ const BottomTabsHome = () => {
           }}
         />
         <Tab.Screen
-          name="Home3"
+          name="Restaraunts"
           component={ProfileScreen}
           options={{
             tabBarIcon: ({ focused }) => (
@@ -80,6 +81,27 @@ const BottomTabsHome = () => {
               </View>
             ),
           }}
+        />
+        <Tab.Screen
+          name="Search"
+          component={ProfileScreen}
+          options={
+            {
+              tabBarIcon: ({ focused }) => (
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
+                  <Ionicons
+                    name="search"
+                    size={24}
+                    color={
+                      focused
+                        ? THEME.COLORS.YELLOW.JONQUIL
+                        : THEME.COLORS.WHITE.WHITE
+                    }
+                  />
+                </View>
+              ), 
+            }
+          }
         />
       </Tab.Navigator>
   );

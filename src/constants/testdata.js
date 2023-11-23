@@ -28,3 +28,23 @@ export const cardsData = [
     rating: 3.5,
   }
 ];
+
+export const supplierData = [
+  {
+    id: 1,
+    uri: "https://live.staticflickr.com/490/18749036995_efcc066c75_k.jpg",
+    nombre: "Bodega Aurrera",
+  },
+  {
+    id: 2,
+    uri: "https://thelogisticsworld.com/wp-content/uploads/2023/04/walmart-mexico-2-828x548.jpg",
+    nombre: "Walmart",
+  },
+  {
+    id: 3,
+    uri: "https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F842e771c-00fe-44dc-a5e2-f379ced3dd25_750x350.jpeg",
+    nombre: "Soriana",
+  },
+  { id: 4, uri: "https://picsum.photos/700", nombre: "Oxxo" },
+  { id: 5, uri: "https://picsum.photos/700", nombre: "7 Eleven" },
+];

@@ -20,7 +20,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
-  const { handleLogout } = useAuthContext();
+
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -32,8 +32,7 @@ const Home = () => {
   })
 
   useEffect(() => {
-    console.log("adas"); 
-    console.log(restaurantes.data)
+    
   }, []);
 
   return (
@@ -57,37 +56,15 @@ const Home = () => {
           placeholder="Search"
           onChangeText={(query) => onChangeSearch(query)}
           value={searchQuery}
+          
           style={{
-            height: 50,
-            textAlign: "center",
+            height: 40,
             width: "100%",
             marginBottom: 10,
           }}
           elevation={5}
         />
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <Chip
-            icon="information"
-            onPress={() => console.log("Pressed")}
-            style={{ marginLeft: 10 }}
-          >
-            Grocery
-          </Chip>
-          <Chip
-            icon="information"
-            onPress={() => console.log("Pressed")}
-            style={{ marginLeft: 10 }}
-          >
-            Restaurants
-          </Chip>
-          <Chip
-            icon="information"
-            onPress={() => console.log("Pressed")}
-            style={{ marginLeft: 10 }}
-          >
-            Convenience
-          </Chip>
-        </ScrollView>
+        
       </View>
       <View style={styles.containerSupplies}>
         <Text variant="headlineSmall">Suppliers</Text>
@@ -132,3 +109,29 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
+
+/*
+<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <Chip
+            icon="information"
+            onPress={() => console.log("Pressed")}
+            style={{ marginLeft: 10 }}
+          >
+            Grocery
+          </Chip>
+          <Chip
+            icon="information"
+            onPress={() => console.log("Pressed")}
+            style={{ marginLeft: 10 }}
+          >
+            Restaurants
+          </Chip>
+          <Chip
+            icon="information"
+            onPress={() => console.log("Pressed")}
+            style={{ marginLeft: 10 }}
+          >
+            Convenience
+          </Chip>
+        </ScrollView>
+        */

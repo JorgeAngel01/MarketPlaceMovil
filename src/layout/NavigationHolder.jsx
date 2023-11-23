@@ -10,6 +10,7 @@ import ProfileScreen from "../screens/logedScreens/ProfileScreen";
 import { CartProvider } from "../context/CartContext";
 import CartScreen from "../screens/logedScreens/CartScreen";
 import RestaurantDetails from "../screens/logedScreens/RestaurantDetailsScreen";
+import ProveedorDetails from "../screens/logedScreens/ProveedorDetailsScreen";
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,7 @@ const NavigationHolder = () => {
             <Stack.Screen name="Profile" component={ProfileScreen} />
             <Stack.Screen name="Cart" component={CartScreen} />
             <Stack.Screen name="RestaurantDetails" component={RestaurantDetails} />
+            <Stack.Screen name="ProveedorDetails" component={ProveedorDetails} />
           </Stack.Navigator>
         </CartProvider>
       </>

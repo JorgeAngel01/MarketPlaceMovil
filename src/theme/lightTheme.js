@@ -1,18 +1,18 @@
 
-export const lightTheme ={
+export const Theme = {
   "colors": {
     "primary": "rgb(79, 216, 235)",
     "onPrimary": "rgb(0, 54, 61)",
     "primaryContainer": "rgb(0, 79, 88)",
     "onPrimaryContainer": "rgb(151, 240, 255)",
-    "secondary": "rgb(255, 177, 200)",
-    "onSecondary": "rgb(94, 17, 51)",
-    "secondaryContainer": "rgb(123, 41, 73)",
-    "onSecondaryContainer": "rgb(255, 217, 226)",
-    "tertiary": "rgb(242, 192, 0)",
-    "onTertiary": "rgb(61, 46, 0)",
-    "tertiaryContainer": "rgb(88, 68, 0)",
-    "onTertiaryContainer": "rgb(255, 224, 142)",
+    "secondary": "rgb(242, 192, 0)",
+    "onSecondary": "rgb(61, 46, 0)",
+    "secondaryContainer": "rgb(88, 68, 0)",
+    "onSecondaryContainer": "rgb(255, 224, 142)",
+    "tertiary": "rgb(255, 181, 160)",
+    "onTertiary": "rgb(96, 21, 0)",
+    "tertiaryContainer": "rgb(135, 33, 0)",
+    "onTertiaryContainer": "rgb(255, 219, 209)",
     "error": "rgb(255, 180, 171)",
     "onError": "rgb(105, 0, 5)",
     "errorContainer": "rgb(147, 0, 10)",
