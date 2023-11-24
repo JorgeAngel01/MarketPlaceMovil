@@ -18,3 +18,9 @@ En la sección de Instrucciones de Instalación de este repositorio, encontrará
 
 3. Descarga la aplicacion de expo en tu celular.
 4. Escanea el codigo QR con la aplicacion en tu celular.
+
+## Documentacion de liberias y tecnologias utilizadas:
+
+React Native Paper: https://callstack.github.io/react-native-paper/
+
+Tanstack Query: https://tanstack.com/query/latest/docs/react/overview
