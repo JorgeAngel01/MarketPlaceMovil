@@ -2,15 +2,19 @@ import React, { useEffect, useState } from "react";
 import { View, ActivityIndicator } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+
+// Screens
 import Login from "../screens/Login";
-import { useAuthContext } from "../hooks/useAuthContext";
 import Register from "../screens/Register";
 import BottomTabsHome from "./BottomTabsHome";
-import ProfileScreen from "../screens/logedScreens/ProfileScreen";
+import ProfileScreen from "../screens/logedScreens/profile/ProfileScreen";
+import CartScreen from "../screens/logedScreens/cart/CartScreen";
+import RestaurantDetails from "../screens/logedScreens/restaurant/RestaurantDetailsScreen";
+import ProveedorDetails from "../screens/logedScreens/proveedor/ProveedorDetailsScreen";
+
+// Hooks and Contexts
+import { useAuthContext } from "../hooks/useAuthContext";
 import { CartProvider } from "../context/CartContext";
-import CartScreen from "../screens/logedScreens/CartScreen";
-import RestaurantDetails from "../screens/logedScreens/RestaurantDetailsScreen";
-import ProveedorDetails from "../screens/logedScreens/ProveedorDetailsScreen";
 
 const Stack = createStackNavigator();
 

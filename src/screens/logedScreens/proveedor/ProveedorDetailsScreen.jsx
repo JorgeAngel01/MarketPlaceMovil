@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, TouchableOpacity, View, Image } from "react-native";
-import { useAuthContext } from "../../hooks/useAuthContext";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 import {
   Button,
   Card,
@@ -11,15 +11,15 @@ import {
 } from "react-native-paper";
 import { useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import ProfileButton from "../../components/atoms/ProfileButton";
+import ProfileButton from "../../../components/atoms/ProfileButton";
 import { useQuery } from "@tanstack/react-query";
-import { getProductos, getProductosProveedor, getRestaurantes, getUsuarios } from "../../context/services/useApi";
+import { getProductosProveedor} from "../../../context/services/useApi";
 
 const ProveedorScreen = ({ route }) => {
   const theme = useTheme();
   const navigation = useNavigation();
-  const { supplier } = route.params;
-  const id = supplier.id;
+  const { proveedor } = route.params;
+  const id = proveedor.id;
 
   const productos = useQuery({
     queryKey: ['productos', id],
@@ -27,7 +27,7 @@ const ProveedorScreen = ({ route }) => {
   })
 
   if (productos.status === 'pending') {
-    return <Text style={{color:"black"}}>{supplier.id}</Text>
+    return <Text style={{color:"black"}}>{proveedor.id}</Text>
   }
 
   if (productos.status === 'error') {
@@ -40,7 +40,7 @@ const ProveedorScreen = ({ route }) => {
     >
       <View style={styles.topContainer}>
         <Card style={[styles.card]}>
-          <Card.Cover style={styles.cardCover} source={{ uri: supplier.uri }} />
+          <Card.Cover style={styles.cardCover} source={{ uri: proveedor.uri }} />
           <Card.Content style={[styles.cardContent]}>
             <View style={styles.cardTop}>
               <IconButton
@@ -57,7 +57,7 @@ const ProveedorScreen = ({ route }) => {
         </Card>
       </View>
       <View style={styles.bottomContainer}>
-        <Text variant="headlineLarge">{supplier.nombre}</Text>
+        <Text variant="headlineLarge">{proveedor.nombre}</Text>
         <View style={styles.products}>
           <Text variant="titleLarge">Productos</Text>
           <View style={styles.productsList}>

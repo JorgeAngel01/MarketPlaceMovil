@@ -1,17 +1,11 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { useAuthContext } from "../../hooks/useAuthContext";
-import {
-  Button,
-  Card,
-  Divider,
-  Icon,
-  IconButton,
-  Text,
-} from "react-native-paper";
-import { useTheme } from "react-native-paper";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useNavigation } from "@react-navigation/native";
-import ProfileButton from "../../components/atoms/ProfileButton";
+import { useTheme } from "react-native-paper";
+import { Button, Card, Divider, Icon, IconButton, Text } from "react-native-paper";
+import ProfileButton from "../../../components/atoms/ProfileButton";
+
 
 const ProfileScreen = () => {
   const theme = useTheme();

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import { useAuthContext } from "../../hooks/useAuthContext";
-import ProfileButton from "../../components/atoms/ProfileButton";
+import { View, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { useAuthContext } from "../../../hooks/useAuthContext";
+import { useQuery } from "@tanstack/react-query";
 import {
   Avatar,
   Card,
@@ -12,12 +13,12 @@ import {
   Text,
   useTheme,
 } from "react-native-paper";
-import { THEME } from "../../theme/styles";
-import SupplierScroll from "../../components/layout/SupplierScroll";
-import RestaurantScroll from "../../components/layout/RestaurantScroll";
-import { getProveedores, getRestaurantes } from "../../context/services/useApi";
-import { useQuery } from "@tanstack/react-query";
-import { useNavigation } from "@react-navigation/native";
+import { getProveedores, getRestaurantes } from "../../../context/services/useApi";
+import { THEME } from "../../../theme/styles";
+import ProfileButton from "../../../components/atoms/ProfileButton";
+import RestaurantScroll from "../../../components/layout/RestaurantScroll";
+import SupplierScroll from "../../../components/layout/SupplierScroll";
+
 
 const Home = () => {
 
@@ -64,7 +65,29 @@ const Home = () => {
           }}
           elevation={5}
         />
-        
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <Chip
+            icon="information"
+            onPress={() => console.log("Pressed")}
+            style={{ marginLeft: 10 }}
+          >
+            Grocery
+          </Chip>
+          <Chip
+            icon="information"
+            onPress={() => console.log("Pressed")}
+            style={{ marginLeft: 10 }}
+          >
+            Restaurants
+          </Chip>
+          <Chip
+            icon="information"
+            onPress={() => console.log("Pressed")}
+            style={{ marginLeft: 10 }}
+          >
+            Convenience
+          </Chip>
+        </ScrollView>
       </View>
       <View style={styles.containerSupplies}>
         <Text variant="headlineSmall">Suppliers</Text>

@@ -19,12 +19,12 @@ const SupplierScroll = () => {
       showsHorizontalScrollIndicator={false}
       style={{ marginTop: 10 }}
     >
-      {supplierData.map((supplier) => (
+      {supplierData.map((proveedor) => (
         <TouchableOpacity
-          key={supplier.id}
+          key={proveedor.id}
           onPress={() =>
             navigation.navigate("ProveedorDetails", {
-              supplier: supplier,
+              proveedor: proveedor,
             })
           }
         >
@@ -32,11 +32,11 @@ const SupplierScroll = () => {
             style={[
               [styles.card],
               {
-                marginLeft: supplier.id !== 1 ? 10 : 0,
+                marginLeft: proveedor.id !== 1 ? 10 : 0,
               },
             ]}
           >
-            <Card.Cover source={{ uri: supplier.uri }} style={[styles.card]} />
+            <Card.Cover source={{ uri: proveedor.uri }} style={[styles.card]} />
           </Card>
         </TouchableOpacity>
       ))}

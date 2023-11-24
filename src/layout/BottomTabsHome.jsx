@@ -1,13 +1,16 @@
 import React from "react";
+import { View } from "react-native";
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
-import HomeScreen from "../screens/logedScreens/HomeScreen";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 
-import { View } from "react-native";
-import { THEME } from "../theme/styles";
-import ProfileScreen from "../screens/logedScreens/ProfileScreen";
-import ProveedorScreen from "../screens/logedScreens/ProveedorScreen";
+// Screens
+import HomeScreen from "../screens/logedScreens/bottomTabs/HomeScreen";
+import ProveedorScreen from "../screens/logedScreens/bottomTabs/ProveedorScreen";
+import RestaurantsScreen from "../screens/logedScreens/bottomTabs/RestaurantsScreen";
+import SearchScreen from "../screens/logedScreens/bottomTabs/SearchScreen";
 
+// Theme
+import { THEME } from "../theme/styles";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -65,7 +68,7 @@ const BottomTabsHome = () => {
         />
         <Tab.Screen
           name="Restaraunts"
-          component={ProfileScreen}
+          component={RestaurantsScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -84,7 +87,7 @@ const BottomTabsHome = () => {
         />
         <Tab.Screen
           name="Search"
-          component={ProfileScreen}
+          component={SearchScreen}
           options={
             {
               tabBarIcon: ({ focused }) => (
