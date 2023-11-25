@@ -16,7 +16,7 @@ const CartItem = ({ item, onRemove, onUpdateQuantity }) => {
   };
 
   return (
-    <Card style={styles.card}>
+    <Card mode="outlined" style={styles.card}>
       <Card.Content style={styles.content}>
         <Image source={{ uri: item.image }} style={styles.image} />
         <View style={styles.details}>
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   image: {
-    width: "30%",
+    width: "34%",
     height: "100%",
     marginRight: 8,
     borderRadius: 8,
