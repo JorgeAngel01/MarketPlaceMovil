@@ -59,67 +59,119 @@ export const register = async ({
 };
 
 export const getUsuarios = async () => {
-  const response = await fetch(`https://marketplace-ylae.onrender.com/usuarios/`);
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/usuarios/`
+  );
   const data = await response.json();
   return data;
-}
+};
 
-export const getUsuario = async ({username}) => {
-  const response = await fetch(`https://marketplace-ylae.onrender.com/usuario/${username}/`);
+export const getUsuario = async ({ username }) => {
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/usuario/${username}/`
+  );
   const data = await response.json();
   return data;
-}
+};
 
-export const getProductos = async () => {
+export const getProductos = async (id = "") => {
   const token = await handleGetSecureStore("token");
-  const response = await fetch(`https://marketplace-ylae.onrender.com/productos/`,
-  {
+  const url = `https://marketplace-ylae.onrender.com/productos/${id}`;
+
+  const response = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Token ${token}`,
+      Authorization: `Token ${token}`,
     },
   });
+
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status}`);
+  }
+
   const data = await response.json();
   return data;
-}
+};
 
 export const getProductosProveedor = async (id) => {
   const token = await handleGetSecureStore("token");
-  const response = await fetch(`https://marketplace-ylae.onrender.com/productos_proveedor/${id}`,
-  {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Token ${token}`,
-    },
-  });
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/productos_proveedor/${id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    }
+  );
 
   const data = await response.json();
   console.log(data);
   return data;
-}
+};
 
-export const getProductosRestaurante = async ({id}) => {
-  const response = await fetch(`https://marketplace-ylae.onrender.com/productos_restaurante/${id}/`);
+export const getProductosRestaurante = async ({ id }) => {
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/productos_restaurante/${id}/`
+  );
   const data = await response.json();
   return data;
-}
+};
 
 export const getProveedores = async () => {
-  const response = await fetch(`https://marketplace-ylae.onrender.com/proveedores/`);
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/proveedores/`
+  );
   const data = await response.json();
   return data;
-}
+};
 
 export const getRestaurantes = async () => {
-  const response = await fetch(`https://marketplace-ylae.onrender.com/restaurantes/`);
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/restaurantes/`
+  );
   const data = await response.json();
   return data;
-}
+};
 
 export const getReviews = async () => {
-  const response = await fetch(`https://marketplace-ylae.onrender.com/reviews/`);
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/reviews/`
+  );
   const data = await response.json();
   return data;
-}
+};
+
+export const getUserOrdenes = async (username, latest = false) => {
+  const token = await handleGetSecureStore("token");
+  const url = `https://marketplace-ylae.onrender.com/ordenes/${username}${
+    latest ? "?latest=true" : ""
+  }`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+};
+
+export const getItemsOrden = async (id) => {
+  const token = await handleGetSecureStore("token");
+  const url = `https://marketplace-ylae.onrender.com/items_orden/?orden_id=${id}`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+};

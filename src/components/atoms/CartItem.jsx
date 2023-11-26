@@ -1,9 +1,14 @@
 import React from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Text } from "react-native";
 import { Card, Title, Paragraph, IconButton } from "react-native-paper";
+import { useQuery } from "@tanstack/react-query";
+import { getProductos } from "../../context/services/useApi";
 
 const CartItem = ({ item, onRemove, onUpdateQuantity }) => {
-  const totalPrice = item.precio * item.cantidad;
+  const { data: producto, isSuccess } = useQuery({
+    queryKey: ["producto", item.id],
+    queryFn: () => getProductos(item.producto),
+  });
 
   const handleIncrement = () => {
     onUpdateQuantity(item.id, item.cantidad + 1);
@@ -15,13 +20,17 @@ const CartItem = ({ item, onRemove, onUpdateQuantity }) => {
     }
   };
 
+  if (!isSuccess) return <Text>Cargando...</Text>;
+
   return (
     <Card mode="outlined" style={styles.card}>
       <Card.Content style={styles.content}>
-        <Image source={{ uri: item.image }} style={styles.image} />
+        <Image source={{ uri: producto.image }} style={styles.image} />
         <View style={styles.details}>
-          <Title>{item.nombre}</Title>
-          <Paragraph style={styles.price}>$ {totalPrice.toFixed(2)}</Paragraph>
+          <Title>{producto.nombre}</Title>
+          <Paragraph style={styles.price}>
+            $ {(item.cantidad * producto.precio).toFixed(2)}
+          </Paragraph>
           <View style={styles.quantityContainer}>
             <Paragraph style={styles.text}>Cantidad:</Paragraph>
             <IconButton
