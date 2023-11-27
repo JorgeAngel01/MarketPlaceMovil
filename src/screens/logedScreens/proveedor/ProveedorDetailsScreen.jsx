@@ -1,74 +1,118 @@
-import React, { useEffect } from "react";
-import { StyleSheet, TouchableOpacity, View, Image } from "react-native";
-import { useAuthContext } from "../../../hooks/useAuthContext";
+import React, { useState } from "react";
+import { StyleSheet, View } from "react-native";
 import {
-  Button,
-  Card,
-  Divider,
-  Icon,
-  IconButton,
   Text,
+  Surface,
+  Divider,
+  Button,
+  ActivityIndicator,
 } from "react-native-paper";
 import { useTheme } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
-import ProfileButton from "../../../components/atoms/ProfileButton";
 import { useQuery } from "@tanstack/react-query";
-import { getProductosProveedor} from "../../../context/services/useApi";
+import {
+  getCategoriasProveedor,
+  getProductosProveedor,
+} from "../../../context/services/useApi";
+import CategoriesChipScroll from "../../../components/layout/CategoriesChipScroll";
+import ProveedorHeader from "../../../components/layout/proveedores/ProveedorHeader";
+import ProductGallery from "../../../components/layout/ProductGallery";
+import OrderModal from "../../../components/layout/OrderModal";
 
 const ProveedorScreen = ({ route }) => {
   const theme = useTheme();
-  const navigation = useNavigation();
   const { proveedor } = route.params;
   const id = proveedor.id;
+  const [filteredProductos, setFilteredProductos] = useState([]);
+  const [quantity, setQuantity] = useState(0);
+
+  const [itemModal, setItemModal] = useState({});
+  const [visible, setVisible] = useState(false);
+
+  const showModal = (item) => {
+    setItemModal(item);
+    setQuantity(0); // Initialize quantity when the modal is opened
+    setVisible(true);
+  };
+
+  const hideModal = () => {
+    setItemModal({});
+    setVisible(false);
+  };
 
   const productos = useQuery({
-    queryKey: ['productos', id],
+    queryKey: ["productos", id],
     queryFn: () => getProductosProveedor(id),
-  })
+  });
 
-  if (productos.status === 'pending') {
-    return <Text style={{color:"black"}}>{proveedor.id}</Text>
+  const categorias = useQuery({
+    queryKey: ["categorias"],
+    queryFn: getCategoriasProveedor,
+  });
+
+  const handleCategoriaPress = (categoria) => {
+    const filter = productos.data.filter(
+      (producto) => producto.categoria === categoria
+    );
+    console.log(filter);
+    console.log(categoria);
+    setFilteredProductos(filter);
+  };
+
+  if (productos.status === "pending" || categorias.status === "pending") {
+    return (
+      <View
+        style={[
+          styles.container,
+          {
+            justifyContent: "center",
+            backgroundColor: theme.colors.background,
+          },
+        ]}
+      >
+        <ActivityIndicator size={"large"} />
+      </View>
+    );
   }
 
-  if (productos.status === 'error') {
-    return <Text style={{color:"black"}}>Error {productos.error.message}</Text>
+  if (productos.status === "error") {
+    return (
+      <Text style={{ color: "black" }}>Error {productos.error.message}</Text>
+    );
   }
 
   return (
-    <View
-      style={[styles.container, { backgroundColor: theme.colors.background }]}
-    >
-      <View style={styles.topContainer}>
-        <Card style={[styles.card]}>
-          <Card.Cover style={styles.cardCover} source={{ uri: proveedor.uri }} />
-          <Card.Content style={[styles.cardContent]}>
-            <View style={styles.cardTop}>
-              <IconButton
-                mode="contained"
-                icon="arrow-left"
-                color={theme.colors.text}
-                size={30}
-                onPress={() => navigation.goBack()}
-                style={{ left: -10 }}
-              />
-            </View>
-            <View style={styles.cardBottom}></View>
-          </Card.Content>
-        </Card>
-      </View>
-      <View style={styles.bottomContainer}>
-        <Text variant="headlineLarge">{proveedor.nombre}</Text>
-        <View style={styles.products}>
-          <Text variant="titleLarge">Productos</Text>
-          <View style={styles.productsList}>
-            {productos.data.map((producto) => (
-                <Text variant="titleSmall">{producto.nombre}</Text>
-            ))
-            }
-          </View>
+    <>
+      <OrderModal
+        visible={visible}
+        hideModal={hideModal}
+        itemModal={itemModal}
+        quantity={quantity}
+        setQuantity={setQuantity}
+      />
+      <View
+        style={[styles.container, { backgroundColor: theme.colors.background }]}
+      >
+        <View style={styles.topContainer}>
+          <ProveedorHeader proveedor={proveedor} />
+        </View>
+        <View style={styles.bottomContainer}>
+          <Surface style={styles.surface} elevation={2}>
+            <Text variant="headlineLarge">{proveedor.nombre}</Text>
+          </Surface>
+          <Divider style={{ width: "100%", marginVertical: 10 }} />
+          <CategoriesChipScroll
+            data={categorias.data}
+            onPress={handleCategoriaPress}
+          />
+          <ProductGallery
+            data={filteredProductos}
+            height={100}
+            width={100}
+            onPress={showModal}
+          />
         </View>
       </View>
-    </View>
+    </>
   );
 };
 
@@ -79,51 +123,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   topContainer: {
-    width: "100%",
     height: "25%",
+    width: "100%",
     justifyContent: "flex-start",
     alignItems: "center",
   },
   bottomContainer: {
+    flex: 1,
     width: "100%",
-    height: "70%",
     justifyContent: "flex-start",
-    alignItems: "center",
+    alignItems: "stretch",
     paddingTop: 20,
+    paddingHorizontal: 20,
   },
-  card: {
-    height: "100%",
-    width: "100%",
-  },
-  cardCover: {
-    objectFit: "scale-down",
+  surface: {
+    padding: 8,
+    width: "100",
     borderRadius: 10,
-    height: "100%",
-    width: "100%",
-  },
-  cardContent: {
-    position: "absolute",
-    backgroundColor: "rgba(0,0,0,0.5)",
-    bottom: 0,
-    left: 0,
-    height: "100%",
-    width: "100%",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-  },
-  cardTop: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    width: "100%",
-    paddingTop: 10,
-  },
-  cardBottom: {
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    alignItems: "flex-start",
-    width: "100%",
-    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
   text: {
     color: "black",
@@ -131,15 +149,3 @@ const styles = StyleSheet.create({
 });
 
 export default ProveedorScreen;
-
-/*
-{supplier.productos.map((producto) => (
-              <View style={styles.producto}>
-                <Image
-                  style={styles.productoImage}
-                  source={{ uri: producto.uri }}
-                />
-                <Text variant="titleSmall">{producto.nombre}</Text>
-              </View>
-            ))}
-            */

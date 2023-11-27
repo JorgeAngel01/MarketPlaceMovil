@@ -96,7 +96,6 @@ export const getProductosProveedor = async (id) => {
   });
 
   const data = await response.json();
-  console.log(data);
   return data;
 }
 
@@ -111,6 +110,21 @@ export const getProveedores = async () => {
   const data = await response.json();
   return data;
 }
+
+export const getCategoriasProveedor = async () => {
+  const token = await handleGetSecureStore("token");
+  const response = await fetch(`https://marketplace-ylae.onrender.com/proveedores/categorias`,
+  {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Token ${token}`,
+    },
+  });
+  const data = await response.json();;
+  return data;
+}
+
 
 export const getRestaurantes = async () => {
   const response = await fetch(`https://marketplace-ylae.onrender.com/restaurantes/`);
