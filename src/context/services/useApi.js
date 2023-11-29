@@ -77,7 +77,7 @@ export const getUsuarios = async () => {
   const data = await response.json();
   return data;
 };
-};
+
 
 export const getUsuario = async ({ username }) => {
   const response = await fetch(
@@ -87,7 +87,7 @@ export const getUsuario = async ({ username }) => {
   const data = await response.json();
   return data;
 };
-};
+
 
 export const getProductos = async () => {
   const response = await fetch(
@@ -106,7 +106,7 @@ export const getCategoriasProductos = async () => {
   const data = await response.json();
   return data;
 };
-};
+
 
 export const getProductosProveedor = async (id) => {
   const response = await fetch(
@@ -164,7 +164,7 @@ export const getCategoriasRestaurante = async () => {
   const data = await response.json();
   return data;
 };
-};
+
 
 export const getReviews = async () => {
   const response = await fetch(
@@ -207,5 +207,4 @@ export const getItemsOrden = async (id) => {
   });
   const data = await response.json();
   return data;
-};
 };
