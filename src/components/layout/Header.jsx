@@ -7,13 +7,13 @@ import {
 } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
-const ProveedorHeader = ({proveedor}) => {
+const Header = ({object}) => {
     const navigation = useNavigation();
     const theme = useTheme();
 
   return (
     <Card style={[styles.card]}>
-      <Card.Cover style={styles.cardCover} source={{ uri: proveedor.uri }} />
+      <Card.Cover style={styles.cardCover} source={{ uri: object.banner }} />
       <Card.Content style={[styles.cardContent]}>
         <View style={styles.cardTop}>
           <IconButton
@@ -68,4 +68,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export default ProveedorHeader;
+export default Header;

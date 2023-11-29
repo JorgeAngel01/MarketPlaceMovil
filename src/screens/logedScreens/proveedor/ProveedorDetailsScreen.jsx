@@ -10,13 +10,15 @@ import {
 import { useTheme } from "react-native-paper";
 import { useQuery } from "@tanstack/react-query";
 import {
+  getCategoriasProductos,
   getCategoriasProveedor,
   getProductosProveedor,
 } from "../../../context/services/useApi";
 import CategoriesChipScroll from "../../../components/layout/CategoriesChipScroll";
-import ProveedorHeader from "../../../components/layout/proveedores/ProveedorHeader";
+import Header from "../../../components/layout/Header";
 import ProductGallery from "../../../components/layout/ProductGallery";
 import OrderModal from "../../../components/layout/OrderModal";
+import LoadingScreen from "../../../components/layout/LoadingScreen";
 
 const ProveedorScreen = ({ route }) => {
   const theme = useTheme();
@@ -40,13 +42,13 @@ const ProveedorScreen = ({ route }) => {
   };
 
   const productos = useQuery({
-    queryKey: ["productos", id],
+    queryKey: ["productosProveedor", id],
     queryFn: () => getProductosProveedor(id),
   });
 
   const categorias = useQuery({
     queryKey: ["categorias"],
-    queryFn: getCategoriasProveedor,
+    queryFn: getCategoriasProductos,
   });
 
   const handleCategoriaPress = (categoria) => {
@@ -60,17 +62,7 @@ const ProveedorScreen = ({ route }) => {
 
   if (productos.status === "pending" || categorias.status === "pending") {
     return (
-      <View
-        style={[
-          styles.container,
-          {
-            justifyContent: "center",
-            backgroundColor: theme.colors.background,
-          },
-        ]}
-      >
-        <ActivityIndicator size={"large"} />
-      </View>
+      <LoadingScreen/>
     );
   }
 
@@ -93,7 +85,7 @@ const ProveedorScreen = ({ route }) => {
         style={[styles.container, { backgroundColor: theme.colors.background }]}
       >
         <View style={styles.topContainer}>
-          <ProveedorHeader proveedor={proveedor} />
+          <Header object={proveedor} />
         </View>
         <View style={styles.bottomContainer}>
           <Surface style={styles.surface} elevation={2}>

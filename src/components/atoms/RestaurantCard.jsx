@@ -24,7 +24,7 @@ const RestaurantCard = ({ card, height }) => {
         ]}
       >
         <Card.Cover
-          source={{ uri: card.uri }}
+          source={{ uri: card.banner }}
           style={{
             height: height,
           }}
@@ -34,15 +34,15 @@ const RestaurantCard = ({ card, height }) => {
             <Avatar.Image
               size={30}
               source={{
-                uri: card.avatar,
+                uri: card.icono,
               }}
             />
             <Text variant="headlineMedium" style={styles.title}>
-              {card.name}
+              {card.nombre}
             </Text>
           </View>
           <View style={styles.cardBottom}>
-            <StarRating score={card.rating} 
+            <StarRating score={card.promedio_calific} 
                 halfStars={true}
                 size={20}
             />
