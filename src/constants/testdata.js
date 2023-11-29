@@ -18,13 +18,13 @@ export const cardsData = [
   {
     id: 3,
     name: "Burger King",
-    uri: "https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F842e771c-00fe-44dc-a5e2-f379ced3dd25_750x350.jpeg",
+    uri: "https://cdn-3.expansion.mx/dims4/default/63cd9c9/2147483647/strip/true/crop/686x360+67+0/resize/1200x630!/format/jpg/quality/80/?url=https%3A%2F%2Fcdn-3.expansion.mx%2F07%2F95%2Fbcdb59bd451ebadd2b80d09fd74f%2Fburger-king1.png",
     rating: 3.5,
   },
   {
     id: 4,
     name: "Dominos",
-    uri: "https://www.dominos.com.mx/Content/images/pizza.png",
+    uri: "https://www.lavanguardia.com/andro4all/hero/2023/07/dominos-pizza-y-su-nuevaa-app.png?width=768&aspect_ratio=16:9&format=nowebp",
     rating: 3.5,
   }
 ];
@@ -45,6 +45,10 @@ export const supplierData = [
     uri: "https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F842e771c-00fe-44dc-a5e2-f379ced3dd25_750x350.jpeg",
     nombre: "Soriana",
   },
-  { id: 4, uri: "https://picsum.photos/700", nombre: "Oxxo" },
-  { id: 5, uri: "https://picsum.photos/700", nombre: "7 Eleven" },
+  { id: 4, 
+    uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Oxxo_Logo.svg/1200px-Oxxo_Logo.svg.png", 
+    nombre: "Oxxo" },
+  { id: 5, 
+    uri: "https://media.licdn.com/dms/image/C4E1BAQGnSPoXWB2VAA/company-background_10000/0/1647970422884/7_eleven_cover?e=2147483647&v=beta&t=-977MPABkNNSNeuJvrCNv6AJtHRd2fGtcK9BFcunuos", 
+    nombre: "7 Eleven" },
 ];
