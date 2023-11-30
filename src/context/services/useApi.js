@@ -2,6 +2,17 @@ import React from "react";
 import { handleShowError } from "../../helpers/handleShowError";
 import { handleGetSecureStore } from "../../helpers/handleSecureStore";
 
+const getAuthHeaders = async () => {
+  const token = await handleGetSecureStore("token");
+  return {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Token ${token}`,
+    },
+  };
+};
+
 export const authenticate = async ({ username, password }) => {
   console.log("authenticate " + username + password);
 
@@ -59,67 +70,141 @@ export const register = async ({
 };
 
 export const getUsuarios = async () => {
-  const response = await fetch(`https://marketplace-ylae.onrender.com/usuarios/`);
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/usuarios/`,
+    await getAuthHeaders()
+  );
   const data = await response.json();
   return data;
-}
+};
 
-export const getUsuario = async ({username}) => {
-  const response = await fetch(`https://marketplace-ylae.onrender.com/usuario/${username}/`);
+
+export const getUsuario = async ({ username }) => {
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/usuario/${username}/`,
+    await getAuthHeaders()
+  );
   const data = await response.json();
   return data;
-}
+};
+
 
 export const getProductos = async () => {
-  const token = await handleGetSecureStore("token");
-  const response = await fetch(`https://marketplace-ylae.onrender.com/productos/`,
-  {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Token ${token}`,
-    },
-  });
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/productos/`,
+    await getAuthHeaders()
+  );
   const data = await response.json();
   return data;
-}
+};
+
+export const getCategoriasProductos = async () => {
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/productos/categorias`,
+    await getAuthHeaders()
+  );
+  const data = await response.json();
+  return data;
+};
+
 
 export const getProductosProveedor = async (id) => {
-  const token = await handleGetSecureStore("token");
-  const response = await fetch(`https://marketplace-ylae.onrender.com/productos_proveedor/${id}`,
-  {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Token ${token}`,
-    },
-  });
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/productos_proveedor/${id}`,
+    await getAuthHeaders()
+  );
 
+  const data = await response.json();
+  return data;
+};
+
+export const getProductosRestaurante = async (id) => {
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/productos_restaurante/${id}`,
+    await getAuthHeaders()
+  );
   const data = await response.json();
   console.log(data);
   return data;
-}
-
-export const getProductosRestaurante = async ({id}) => {
-  const response = await fetch(`https://marketplace-ylae.onrender.com/productos_restaurante/${id}/`);
-  const data = await response.json();
-  return data;
-}
+};
 
 export const getProveedores = async () => {
-  const response = await fetch(`https://marketplace-ylae.onrender.com/proveedores/`);
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/proveedores/`,
+    await getAuthHeaders()
+  );
   const data = await response.json();
   return data;
-}
+};
+
+export const getCategoriasProveedor = async () => {
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/proveedores/categorias`,
+    await getAuthHeaders()
+  );
+  const data = await response.json();
+  return data;
+};
 
 export const getRestaurantes = async () => {
-  const response = await fetch(`https://marketplace-ylae.onrender.com/restaurantes/`);
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/restaurantes/`,
+    await getAuthHeaders()
+  );
+
   const data = await response.json();
   return data;
-}
+};
+
+export const getCategoriasRestaurante = async () => {
+  const response = await fetch(
+    `https://marketplace-ylae.onrender.com/restaurantes/categorias`,
+    await getAuthHeaders()
+  );
+  const data = await response.json();
+  return data;
+};
+
 
 export const getReviews = async () => {
-  const response = await fetch(`https://marketplace-ylae.onrender.com/reviews/`);
+  const response = await fetch(
+    
+    `https://marketplace-ylae.onrender.com/reviews/`,
+    await getAuthHeaders()
+  
+  );
   const data = await response.json();
   return data;
-}
+};
+
+export const getUserOrdenes = async (username, latest = false) => {
+  const token = await handleGetSecureStore("token");
+  const url = `https://marketplace-ylae.onrender.com/ordenes/${username}${
+    latest ? "?latest=true" : ""
+  }`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+};
+
+export const getItemsOrden = async (id) => {
+  const token = await handleGetSecureStore("token");
+  const url = `https://marketplace-ylae.onrender.com/items_orden/?orden_id=${id}`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+};

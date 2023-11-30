@@ -27,6 +27,7 @@ const AuthProvider = ({ children }) => {
       console.log("context", context);
       if (data.token) {
         handleSecureStore("token", data.token);
+        setUser(variables.username);
         setIsAuthenticated(true);
       }
     },

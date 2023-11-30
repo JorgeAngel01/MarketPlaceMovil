@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useQuery } from "@tanstack/react-query";
 import {
+  ActivityIndicator,
   Avatar,
   Card,
   Chip,
@@ -18,6 +19,7 @@ import { THEME } from "../../../theme/styles";
 import ProfileButton from "../../../components/atoms/ProfileButton";
 import RestaurantScroll from "../../../components/layout/RestaurantScroll";
 import SupplierScroll from "../../../components/layout/SupplierScroll";
+import LoadingScreen from "../../../components/layout/LoadingScreen";
 
 
 const Home = () => {
@@ -27,14 +29,21 @@ const Home = () => {
 
   const onChangeSearch = (query) => setSearchQuery(query);
 
+  const proveedores = useQuery({
+    queryKey: ['proveedores'],
+    queryFn: getProveedores,
+  })
+
   const restaurantes = useQuery({
     queryKey: ['restaurantes'],
     queryFn: getRestaurantes,
   })
 
-  useEffect(() => {
-    
-  }, []);
+  if ( restaurantes.isLoading || proveedores.isLoading) {
+    return (
+      <LoadingScreen/>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -91,7 +100,7 @@ const Home = () => {
       </View>
       <View style={styles.containerSupplies}>
         <Text variant="headlineSmall">Suppliers</Text>
-        <SupplierScroll />
+        <SupplierScroll data={proveedores.data}/>
       </View>
       <View style={styles.containerRestaurants}>
         <Text variant="headlineSmall">Restaurants</Text>

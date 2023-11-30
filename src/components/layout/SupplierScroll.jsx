@@ -10,7 +10,7 @@ import { Card } from "react-native-paper";
 import { supplierData } from "../../constants/testdata";
 import { useNavigation } from "@react-navigation/native";
 
-const SupplierScroll = () => {
+const SupplierScroll = ({data}) => {
   const navigation = useNavigation();
 
   return (
@@ -19,7 +19,7 @@ const SupplierScroll = () => {
       showsHorizontalScrollIndicator={false}
       style={{ marginTop: 10 }}
     >
-      {supplierData.map((proveedor) => (
+      {data.map((proveedor, index) => (
         <TouchableOpacity
           key={proveedor.id}
           onPress={() =>
@@ -32,11 +32,11 @@ const SupplierScroll = () => {
             style={[
               [styles.card],
               {
-                marginLeft: proveedor.id !== 1 ? 10 : 0,
+                marginLeft: proveedor.index !== 0 ? 10 : 0,
               },
             ]}
           >
-            <Card.Cover source={{ uri: proveedor.uri }} style={[styles.card]} />
+            <Card.Cover source={{ uri: proveedor.banner }} style={[styles.card]} />
           </Card>
         </TouchableOpacity>
       ))}

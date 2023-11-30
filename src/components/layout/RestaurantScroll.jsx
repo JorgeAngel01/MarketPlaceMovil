@@ -12,14 +12,13 @@ import RestaurantCard from "../atoms/RestaurantCard";
 import { cardsData } from "../../constants/testdata";
 
 const RestaurantScroll = ({data}) => {
-  
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={{ marginTop: 10, flex: 1, width: "100%" }}
     >
-      {cardsData.map((card) => (
-        <RestaurantCard key={card.id} card={card} height={175} />
+      {data.map((item) => (
+        <RestaurantCard key={item.id} card={item} height={175} />
       ))}
     </ScrollView>
   );
