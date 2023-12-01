@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Searchbar, Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
+import RestauranteMainPageScroll from "../../../components/layout/restaurantes/RestauranteMainPageScroll";
 
 const RestaurantsScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -25,7 +26,8 @@ const RestaurantsScreen = () => {
       </View>
       
       <View style={styles.containerSupplies}>
-        <Text variant="headlineSmall">Top 5</Text>
+        {/* <Text variant="headlineSmall">Top 5</Text> */}
+        <RestauranteMainPageScroll />
       </View>
     </View>
   );
@@ -45,6 +47,13 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
+  containerSupplies:{
+    flex: 1,
+    width: "100%",
+    marginTop: 10,
+    justifyContent: "center",
+    alignItems: "flex-start",
+  }
 });
 
 export default RestaurantsScreen;
