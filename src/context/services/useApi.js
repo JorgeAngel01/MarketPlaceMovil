@@ -3,7 +3,7 @@ import { handleShowError } from "../../helpers/handleShowError";
 import { handleGetSecureStore } from "../../helpers/handleSecureStore";
 
 const getAuthHeaders = async () => {
-  const token = await handleGetSecureStore("token");
+  const token = await handleGetSecureStore("authToken");
   return {
     method: "GET",
     headers: {
@@ -79,9 +79,9 @@ export const getUsuarios = async () => {
 };
 
 
-export const getUsuario = async ({ username }) => {
+export const getUsuario = async (username) => {
   const response = await fetch(
-    `https://marketplace-ylae.onrender.com/usuario/${username}/`,
+    `https://marketplace-ylae.onrender.com/usuario/${username}`,
     await getAuthHeaders()
   );
   const data = await response.json();
@@ -89,9 +89,9 @@ export const getUsuario = async ({ username }) => {
 };
 
 
-export const getProductos = async () => {
+export const getProductos = async (id) => {
   const response = await fetch(
-    `https://marketplace-ylae.onrender.com/productos/`,
+    `https://marketplace-ylae.onrender.com/productos/${id}`,
     await getAuthHeaders()
   );
   const data = await response.json();
@@ -178,7 +178,7 @@ export const getReviews = async () => {
 };
 
 export const getUserOrdenes = async (username, latest = false) => {
-  const token = await handleGetSecureStore("token");
+  const token = await handleGetSecureStore("authToken");
   const url = `https://marketplace-ylae.onrender.com/ordenes/${username}${
     latest ? "?latest=true" : ""
   }`;
@@ -195,7 +195,7 @@ export const getUserOrdenes = async (username, latest = false) => {
 };
 
 export const getItemsOrden = async (id) => {
-  const token = await handleGetSecureStore("token");
+  const token = await handleGetSecureStore("authToken");
   const url = `https://marketplace-ylae.onrender.com/items_orden/?orden_id=${id}`;
 
   const response = await fetch(url, {
@@ -208,3 +208,86 @@ export const getItemsOrden = async (id) => {
   const data = await response.json();
   return data;
 };
+
+export const createOrden = async (cliente) => {
+  const token = await handleGetSecureStore("authToken");
+  const url = `https://marketplace-ylae.onrender.com/ordenes/`;
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    },
+    body: JSON.stringify({ cliente }),
+  });
+  const data = await response.json();
+  console.log(data);
+  return data;
+};
+
+export const createItemOrden = async (dataItem) => {
+  const { orden, producto, cantidad } = dataItem;
+
+  const token = await handleGetSecureStore("authToken");
+  const url = `https://marketplace-ylae.onrender.com/items_ordenes/?username=${dataItem.user}`;
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    },
+    body: JSON.stringify({ orden, producto, cantidad }),
+  });
+  const data = await response.json();
+  return data;
+};
+
+export const updateItemOrdenQuantity = async (data) => {
+  const token = await handleGetSecureStore("authToken");
+  const url = `https://marketplace-ylae.onrender.com/items_ordenes/${data.id}/`;
+
+  const response = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    },
+    body: JSON.stringify({ cantidad: data.cantidad }),
+  });
+  const responseData = await response.json();
+  return responseData;
+}
+
+export const deleteItemOrden = async (data) => {
+  const token = await handleGetSecureStore("authToken");
+  const url = `https://marketplace-ylae.onrender.com/items_ordenes/${data.id}/`;
+
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    },
+  });
+  const responseData = await response.json();
+  return responseData;
+}
+
+export const updateOrdenStatus = async (data) => {
+  console.log("updateOrdenStatus " + data.id + " " + data.estado);
+  const token = await handleGetSecureStore("authToken");
+  const url = `https://marketplace-ylae.onrender.com/ordenes/${data.id}/`;
+
+  const response = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    },
+    body: JSON.stringify({ estado: data.estado }),
+  });
+  const responseData = await response.json();
+  return responseData;
+}

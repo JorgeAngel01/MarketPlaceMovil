@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 import { Text, Button, Portal, Modal, useTheme } from "react-native-paper";
+import { useCartContext } from "../../hooks/useCartContext";
 
 const OrderModal = ({
   visible,
@@ -10,6 +11,7 @@ const OrderModal = ({
   setQuantity,
 }) => {
   const theme = useTheme();
+  const { handleAddItem } = useCartContext();
 
   return (
     <Portal>
@@ -32,7 +34,7 @@ const OrderModal = ({
           <View style={styles.quantityContainer}>
             <Button
               icon="minus-thick"
-              onPress={() => quantity > 0 && setQuantity(quantity - 1)}
+              onPress={() => quantity > 1 && setQuantity(quantity - 1)}
             ></Button>
             <Text> {quantity} </Text>
             <Button
@@ -40,7 +42,14 @@ const OrderModal = ({
               mode="text"
               onPress={() => setQuantity(quantity + 1)}
             ></Button>
-            <Button icon="cart" mode="outlined" onPress={() => console.log("")}>
+            <Button
+              icon="cart"
+              mode="outlined"
+              onPress={() => {
+                handleAddItem(itemModal, quantity);
+                hideModal();
+              }}
+            >
               Add to cart
             </Button>
           </View>

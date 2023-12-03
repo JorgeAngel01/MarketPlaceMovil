@@ -27,14 +27,14 @@ const RestaurantDetails = ({ route }) => {
   const { restaurant } = route.params;
   const id = restaurant.id;
   const [filteredProductos, setFilteredProductos] = useState([]);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   const [itemModal, setItemModal] = useState({});
   const [visible, setVisible] = useState(false);
 
   const showModal = (item) => {
     setItemModal(item);
-    setQuantity(0); // Initialize quantity when the modal is opened
+    setQuantity(1); // Initialize quantity when the modal is opened
     setVisible(true);
   };
 
