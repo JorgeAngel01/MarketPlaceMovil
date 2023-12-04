@@ -19,7 +19,7 @@ const RestaurantCard = ({ card, height }) => {
           styles.card,
           {
             height: height,
-            marginTop: card.id !== 1 ? 10 : 0,
+            marginTop: card.index !== 1 ? 10 : 0,
           },
         ]}
       >
