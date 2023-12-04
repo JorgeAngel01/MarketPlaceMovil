@@ -1,41 +1,48 @@
-import React from "react";
+import React, {useState} from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "react-native-paper";
-import {
-  Button,
-  Card,
-  Divider,
-  Icon,
-  IconButton,
-  Text,
-} from "react-native-paper";
+import { Button, Card, Divider, Icon, IconButton, Text } from "react-native-paper";
 import ProfileButton from "../../../components/atoms/ProfileButton";
+import Camara from "../../../components/camara/CamaraComponent";
+
 
 const ProfileScreen = () => {
   const theme = useTheme();
   const navigation = useNavigation();
+  const [mostrarCamara, setMostrarCamara] = useState(false);
+  const [fotoUri, setFotoUri] = useState(null);
 
   const { handleLogout } = useAuthContext();
+
+  const handleEditProfile = () => {
+    setMostrarCamara(true);
+  }
+
+  const closeEditProfile = () => {
+    setMostrarCamara(false);
+  }
+  const handlePhotoTaken = (uri) => {
+    setFotoUri(uri);
+    setMostrarCamara(false);
+  };
 
   return (
     <View
       style={[styles.container, { backgroundColor: theme.colors.background }]}
     >
       <View style={[styles.topBar]}>
-      <IconButton
-          mode="contained"
+        <IconButton
           icon="arrow-left"
           color={theme.colors.text}
           size={30}
           onPress={() => navigation.goBack()}
-          style={{ marginTop: 30, marginLeft: 15 }}
         />
       </View>
       <View style={[styles.topContainer]}>
         <ProfileButton
-          imageUrl="https://xsgames.co/randomusers/avatar.php?g=female"
+          imageUrl={fotoUri? fotoUri :"https://xsgames.co/randomusers/avatar.php?g=female"}
           size={90}
           onPress={() => navigation.navigate("Profile")}
         />
@@ -47,22 +54,34 @@ const ProfileScreen = () => {
         <Text variant="titleLarge" style>
           Welcome back
         </Text>
-        <Button
-          mode="contained"
-          onPress={() => console.log("Pressed")}
-          style={{ marginTop: 10 }}
-        >
-          Edit Profile
-        </Button>
+        
+          {mostrarCamara ? (
+            <View style={{height:"75%", width: "80%"}}>
+              <Button
+                mode="contained"
+                onPress={closeEditProfile}
+                style={{ marginTop: 10 }}
+              >
+                Edit Profile
+              </Button>
+              <Camara onPhotoTaken={handlePhotoTaken}/>
+            </View>
+
+          ) : (
+            <Button
+              mode="contained"
+              onPress={handleEditProfile}
+              style={{ marginTop: 10 }}
+            >
+              Edit Profile
+            </Button>
+          )}
+        
         <View style={styles.options}>
           <Divider />
           <View style={styles.cardRow}>
             <Card style={[styles.card, { aspectRatio: 1 }]}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("MyOrders");
-                }}
-              >
+              <TouchableOpacity>
                 <Card.Content
                   style={{
                     justifyContent: "center",
@@ -77,11 +96,7 @@ const ProfileScreen = () => {
             </Card>
 
             <Card style={[styles.card, { aspectRatio: 1 }]}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("MyReviews");
-                }}
-              >
+              <TouchableOpacity>
                 <Card.Content
                   style={{
                     justifyContent: "center",
@@ -98,7 +113,7 @@ const ProfileScreen = () => {
           <View style={styles.cardRow}>
             <Card style={[styles.card, { aspectRatio: 1 }]}>
               <TouchableOpacity>
-                <Card.Content
+              <Card.Content
                   style={{
                     justifyContent: "center",
                     alignItems: "center",
