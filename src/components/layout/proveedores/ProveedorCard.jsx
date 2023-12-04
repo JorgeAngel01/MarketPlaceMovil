@@ -6,47 +6,48 @@ import StarRating from "../../atoms/StarRating";
 
 const ProveedorCard = ({ card, height }) => {
   const navigation = useNavigation();
+  console.log(card)
   
   return (
     <TouchableOpacity key={card.id}
-      // onPress={() => navigation.navigate("ProveedorDetails", 
-      // { 
-      //   proveedor: card
-      // })}
+      onPress={() => navigation.navigate("ProveedorDetails", 
+      { 
+        proveedor: card
+      })}
     >
       <Card
         style={[
           styles.card,
           {
             height: height,
-            marginTop: card.id !== 1 ? 10 : 0,
+            marginTop: card.index !== 1 ? 10 : 0,
           },
         ]}
       >
         <Card.Cover
-          source={{ uri: card.uri }}
+          source={{ uri: card.banner }}
           style={{
             height: height,
           }}
         />
         <Card.Content style={[styles.cardContent]}>
           <View style={styles.cardTop}>
-            {/* <Avatar.Image
+            <Avatar.Image
               size={30}
               source={{
-                uri: card.avatar,
+                uri: card.icono,
               }}
-            /> */}
+            />
             <Text variant="headlineMedium" style={styles.title}>
               {card.nombre}
             </Text>
           </View>
-          {/* <View style={styles.cardBottom}>
-            <StarRating score= {5}//{card.rating} 
+          <View style={styles.cardBottom}>
+            <StarRating score={card.promedio_calific} 
                 halfStars={true}
                 size={20}
             />
-          </View> */}
+          </View>
         </Card.Content>
       </Card>
     </TouchableOpacity>

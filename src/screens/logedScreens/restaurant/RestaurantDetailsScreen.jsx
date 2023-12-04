@@ -12,6 +12,7 @@ import Header from "../../../components/layout/Header";
 import ProductGallery from "../../../components/layout/ProductGallery";
 import OrderModal from "../../../components/layout/OrderModal";
 import LoadingScreen from "../../../components/layout/LoadingScreen";
+import ModalMap from "../../../components/layout/ModalMap";
 
 const RestaurantDetails = ({ route }) => {
   const theme = useTheme();
@@ -23,6 +24,9 @@ const RestaurantDetails = ({ route }) => {
   const [itemModal, setItemModal] = useState({});
   const [visible, setVisible] = useState(false);
 
+  const [itemModalMap, setItemModalMap] = useState({});
+  const [visibleMap, setVisibleMap] = useState(false);
+
   const showModal = (item) => {
     setItemModal(item);
     setQuantity(1); // Initialize quantity when the modal is opened
@@ -32,6 +36,16 @@ const RestaurantDetails = ({ route }) => {
   const hideModal = () => {
     setItemModal({});
     setVisible(false);
+  };
+  
+  const showModalMap = (item) => {
+    setItemModalMap(item);
+    setVisibleMap(true);
+  };
+
+  const hideModalMap = () => {
+    setItemModalMap({});
+    setVisibleMap(false);
   };
 
   useEffect(() => {
@@ -57,6 +71,10 @@ const RestaurantDetails = ({ route }) => {
     setFilteredProductos(filter);
   };
 
+  const handleMapPress = () => {
+    showModalMap(restaurant);
+  };
+
   if (productos.status === "pending" || categorias.status === "pending") {
     return <LoadingScreen />;
   }
@@ -76,11 +94,16 @@ const RestaurantDetails = ({ route }) => {
         quantity={quantity}
         setQuantity={setQuantity}
       />
+      <ModalMap
+        visible={visibleMap}
+        hideModal={hideModalMap}
+        itemModal={itemModalMap}
+      />
       <View
         style={[styles.container, { backgroundColor: theme.colors.background }]}
       >
         <View style={styles.topContainer}>
-          <Header object={restaurant} tipo="restaurante" />
+          <Header object={restaurant} tipo="restaurante" onPress={handleMapPress} />
         </View>
         <View style={styles.bottomContainer}>
           <Surface style={styles.surface} elevation={2}>

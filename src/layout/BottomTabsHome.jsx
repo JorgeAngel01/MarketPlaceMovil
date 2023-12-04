@@ -85,7 +85,14 @@ const BottomTabsHome = () => {
             ),
           }}
         />
-        <Tab.Screen
+        
+      </Tab.Navigator>
+  );
+};
+
+export default BottomTabsHome;
+
+{/* <Tab.Screen
           name="Search"
           component={SearchScreen}
           options={
@@ -105,9 +112,4 @@ const BottomTabsHome = () => {
               ), 
             }
           }
-        />
-      </Tab.Navigator>
-  );
-};
-
-export default BottomTabsHome;
+        /> */}

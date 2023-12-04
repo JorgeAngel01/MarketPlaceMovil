@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 import CartItem from "../../../components/atoms/CartItem";
-import { Text, Button, Icon, IconButton, Title, Divider } from "react-native-paper";
+import {
+  Text,
+  Button,
+  Icon,
+  IconButton,
+  Title,
+  Divider,
+} from "react-native-paper";
 import { useTheme } from "react-native-paper";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useQuery } from "@tanstack/react-query";
@@ -12,13 +19,20 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import LoadingScreen from "../../../components/layout/LoadingScreen";
 import { useCartContext } from "../../../hooks/useCartContext";
+import { handleShowError } from "../../../helpers/handleShowError";
 
 const CartScreen = () => {
   const theme = useTheme();
   const navigation = useNavigation();
   const { user } = useAuthContext();
-  const { handleUpdateQuantity, handleUpdateEstado, handleRemoveCartItem } =
-    useCartContext();
+  const {
+    handleUpdateQuantity,
+    handleUpdateEstado,
+    handleRemoveCartItem,
+    cartBool,
+    setCartBool,
+    setOrdenId,
+  } = useCartContext();
   const [cartArray, setCartArray] = useState([]);
   const [total, setTotal] = useState(0);
 
@@ -28,6 +42,7 @@ const CartScreen = () => {
   });
 
   const ordenId = orden.data?.id;
+  setOrdenId(ordenId);
 
   const {
     data: cartItems,
@@ -36,8 +51,9 @@ const CartScreen = () => {
   } = useQuery({
     queryKey: ["id", ordenId],
     queryFn: () => getItemsOrden(ordenId),
-    enabled: !!ordenId,
   });
+
+  console.log(cartItems)
 
   useEffect(() => {
     if (isSuccess) {
@@ -53,7 +69,12 @@ const CartScreen = () => {
   }, [orden.isSuccess]);
 
   const handleOnBuy = (estado) => {
+    if (cartArray.length === 0) {
+      handleShowError("No hay productos en el carrito");
+      return;
+    }
     handleUpdateEstado(estado);
+    setCartBool(false)
   };
 
   const handleUpdateCartItem = (itemId, newQuantity, price) => {
@@ -87,20 +108,24 @@ const CartScreen = () => {
           style={{ left: -10 }}
         />
         <Title>My Cart</Title>
-        <View style={{ width: 30,  marginLeft: 15 }} />
+        <View style={{ width: 30, marginLeft: 15 }} />
       </View>
       <Divider style={styles.divider} />
-      <ScrollView>
-        {isSuccess &&
-          cartArray.map((item) => (
-            <CartItem
-              key={item.id}
-              item={item}
-              onRemove={handleRemoveItem}
-              onUpdateQuantity={handleUpdateCartItem}
-            />
-          ))}
-      </ScrollView>
+
+      {cartBool && (
+        <ScrollView>
+          {isSuccess &&
+            cartArray.map((item) => (
+              <CartItem
+                key={item.id}
+                item={item}
+                onRemove={handleRemoveItem}
+                onUpdateQuantity={handleUpdateCartItem}
+              />
+            ))}
+        </ScrollView>
+      )}
+
       <Button
         icon="shopping"
         mode="contained"

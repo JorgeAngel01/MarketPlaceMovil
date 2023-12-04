@@ -66,9 +66,6 @@ const Login = () => {
               disabled={isLoading}
             />
             {error && <Text style={styles.errorText}>{error}</Text>}
-            <TouchableOpacity onPress={() => navigation.navigate("")}>
-              <Text style={styles.link}>Forgot Password?</Text>
-            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.bottomLinkContainer}>

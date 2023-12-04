@@ -3,32 +3,36 @@ import { Searchbar, Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import SupplierScroll from "../../../components/layout/SupplierScroll";
 import ProveedorMainPageScroll from "../../../components/layout/proveedores/ProveedorMainPageScroll";
+import { getProveedores } from "../../../context/services/useApi";
+import { useQuery } from "@tanstack/react-query";
+import LoadingScreen from "../../../components/layout/LoadingScreen";
 
 const ProveedorScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const onChangeSearch = (query) => setSearchQuery(query);
 
+  const proveedores = useQuery({
+    queryKey: ['proveedores'],
+    queryFn: getProveedores,
+  })
+  console.log(proveedores.data)
+
+  if ( proveedores.isLoading) {
+    return (
+      <LoadingScreen/>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.containerTop}>
         <Text variant="headlineLarge">Grocery</Text>
-        <Searchbar
-          placeholder="Search"
-          onChangeText={(query) => onChangeSearch(query)}
-          value={searchQuery}
-          style={{
-            height: 40,
-            width: "100%",
-            marginVertical: 10,
-          }}
-          elevation={5}
-        />
       </View>
       
       <View style={styles.containerSupplies}>
         {/* <Text variant="headlineSmall">Suppliers</Text> */}
-        <ProveedorMainPageScroll />
+        <ProveedorMainPageScroll data={proveedores.data}/>
       </View>
     </View>
   );

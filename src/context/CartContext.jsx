@@ -16,6 +16,7 @@ const CartContext = createContext();
 const CartProvider = ({ children }) => {
   const { user, userId } = useAuthContext();
   const [ordenId, setOrdenId] = useState(null);
+  const [cartBool, setCartBool] = useState(false);
 
   useEffect(() => {
     getUserOrdenes(user, true).then((data) => {
@@ -28,10 +29,11 @@ const CartProvider = ({ children }) => {
       } else {
         console.log("Si hay ordenes");
         setOrdenId(data.id);
+        setCartBool(true);
         console.log("OrdenId: ", ordenId);
       }
     });
-  }, []);
+  }, [cartBool]);
 
   const addToCart = useMutation({
     mutationFn: (data) =>
@@ -116,10 +118,15 @@ const CartProvider = ({ children }) => {
   };
 
   const values = {
+    cartBool,
+    setCartBool,
+    ordenId,
+    setOrdenId,
     handleAddItem,
     handleUpdateQuantity,
     handleUpdateEstado,
     handleRemoveCartItem,
+
   };
 
   return <CartContext.Provider value={values}>{children}</CartContext.Provider>;

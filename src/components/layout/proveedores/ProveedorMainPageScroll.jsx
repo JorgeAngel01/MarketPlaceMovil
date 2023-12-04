@@ -1,23 +1,32 @@
 import React from "react";
-import { FlatList} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import ProveedorCard from "./ProveedorCard";
-import { supplierData } from "../../../constants/testdata";
+import {
+  ScrollView,
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { Card, Text } from "react-native-paper";
+import ProveedorCard from "../proveedores/ProveedorCard";
 
-const ProveedorMainPageScroll = ({proveedores}) => {
-  const renderItem = ({ item }) => (
-    <ProveedorCard key={item.id} card={item} height={175} />
+const ProveedorMainPageScroll = ({data}) => {
+  console.log("pito")
+  console.log(data)
+  return (
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={{ marginTop: 10, flex: 1, width: "100%" }}
+    >
+      {data.map((item, index) => (
+        <ProveedorCard key={item.id} card={item} height={175} />
+      ))}
+    </ScrollView>
   );
+};
 
-  return(
-    <FlatList
-    data={supplierData}
-    renderItem={renderItem}
-    keyExtractor={(item) => item.id.toString()}
-    showsVerticalScrollIndicator={false}
-    style={{ marginTop: 10, flex: 1, width: "100%" }}
-  />
-  )
-}
+export default ProveedorMainPageScroll;
 
-export default ProveedorMainPageScroll
+/*
+ */
+/*
+ */

@@ -62,41 +62,8 @@ const Home = () => {
         />
       </View>
       <View style={styles.containerTop}>
-        <Searchbar
-          placeholder="Search"
-          onChangeText={(query) => onChangeSearch(query)}
-          value={searchQuery}
-          
-          style={{
-            height: 40,
-            width: "100%",
-            marginBottom: 10,
-          }}
-          elevation={5}
-        />
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <Chip
-            icon="information"
-            onPress={() => console.log("Pressed")}
-            style={{ marginLeft: 10 }}
-          >
-            Grocery
-          </Chip>
-          <Chip
-            icon="information"
-            onPress={() => console.log("Pressed")}
-            style={{ marginLeft: 10 }}
-          >
-            Restaurants
-          </Chip>
-          <Chip
-            icon="information"
-            onPress={() => console.log("Pressed")}
-            style={{ marginLeft: 10 }}
-          >
-            Convenience
-          </Chip>
-        </ScrollView>
+        
+        
       </View>
       <View style={styles.containerSupplies}>
         <Text variant="headlineSmall">Suppliers</Text>
@@ -143,6 +110,19 @@ const styles = StyleSheet.create({
 export default Home;
 
 /*
+<Searchbar
+          placeholder="Search"
+          onChangeText={(query) => onChangeSearch(query)}
+          value={searchQuery}
+          
+          style={{
+            height: 40,
+            width: "100%",
+            marginBottom: 10,
+          }}
+          elevation={5}
+        />
+
 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <Chip
             icon="information"

@@ -2,32 +2,33 @@ import React, { useState } from "react";
 import { Searchbar, Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import RestauranteMainPageScroll from "../../../components/layout/restaurantes/RestauranteMainPageScroll";
+import LoadingScreen from "../../../components/layout/LoadingScreen";
+import { useQuery } from "@tanstack/react-query";
+import { getRestaurantes } from "../../../context/services/useApi";
+import RestaurantScroll from "../../../components/layout/RestaurantScroll";
 
 const RestaurantsScreen = () => {
-  const [searchQuery, setSearchQuery] = useState("");
 
-  const onChangeSearch = (query) => setSearchQuery(query);
+  const restaurantes = useQuery({
+    queryKey: ['restaurantes'],
+    queryFn: getRestaurantes,
+  })
+
+  if ( restaurantes.isLoading) {
+    return (
+      <LoadingScreen/>
+    );
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.containerTop}>
         <Text variant="headlineLarge">Restaurants</Text>
-        <Searchbar
-          placeholder="Search"
-          onChangeText={(query) => onChangeSearch(query)}
-          value={searchQuery}
-          style={{
-            height: 40,
-            width: "100%",
-            marginVertical: 10,
-          }}
-          elevation={5}
-        />
       </View>
       
       <View style={styles.containerSupplies}>
         {/* <Text variant="headlineSmall">Top 5</Text> */}
-        <RestauranteMainPageScroll />
+        <RestaurantScroll data={restaurantes.data} />
       </View>
     </View>
   );
