@@ -3,9 +3,15 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "react-native-paper";
-import { Button, Card, Divider, Icon, IconButton, Text } from "react-native-paper";
+import {
+  Button,
+  Card,
+  Divider,
+  Icon,
+  IconButton,
+  Text,
+} from "react-native-paper";
 import ProfileButton from "../../../components/atoms/ProfileButton";
-
 
 const ProfileScreen = () => {
   const theme = useTheme();
@@ -18,11 +24,13 @@ const ProfileScreen = () => {
       style={[styles.container, { backgroundColor: theme.colors.background }]}
     >
       <View style={[styles.topBar]}>
-        <IconButton
+      <IconButton
+          mode="contained"
           icon="arrow-left"
           color={theme.colors.text}
           size={30}
           onPress={() => navigation.goBack()}
+          style={{ marginTop: 30, marginLeft: 15 }}
         />
       </View>
       <View style={[styles.topContainer]}>
@@ -50,7 +58,11 @@ const ProfileScreen = () => {
           <Divider />
           <View style={styles.cardRow}>
             <Card style={[styles.card, { aspectRatio: 1 }]}>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("MyOrders");
+                }}
+              >
                 <Card.Content
                   style={{
                     justifyContent: "center",
@@ -65,7 +77,11 @@ const ProfileScreen = () => {
             </Card>
 
             <Card style={[styles.card, { aspectRatio: 1 }]}>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("MyReviews");
+                }}
+              >
                 <Card.Content
                   style={{
                     justifyContent: "center",
@@ -82,7 +98,7 @@ const ProfileScreen = () => {
           <View style={styles.cardRow}>
             <Card style={[styles.card, { aspectRatio: 1 }]}>
               <TouchableOpacity>
-              <Card.Content
+                <Card.Content
                   style={{
                     justifyContent: "center",
                     alignItems: "center",

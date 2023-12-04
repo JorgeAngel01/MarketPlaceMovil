@@ -25,14 +25,14 @@ const ProveedorScreen = ({ route }) => {
   const { proveedor } = route.params;
   const id = proveedor.id;
   const [filteredProductos, setFilteredProductos] = useState([]);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   const [itemModal, setItemModal] = useState({});
   const [visible, setVisible] = useState(false);
 
   const showModal = (item) => {
     setItemModal(item);
-    setQuantity(0); // Initialize quantity when the modal is opened
+    setQuantity(1); // Initialize quantity when the modal is opened
     setVisible(true);
   };
 
@@ -85,7 +85,7 @@ const ProveedorScreen = ({ route }) => {
         style={[styles.container, { backgroundColor: theme.colors.background }]}
       >
         <View style={styles.topContainer}>
-          <Header object={proveedor} />
+          <Header object={proveedor} tipo="proveedor"/>
         </View>
         <View style={styles.bottomContainer}>
           <Surface style={styles.surface} elevation={2}>

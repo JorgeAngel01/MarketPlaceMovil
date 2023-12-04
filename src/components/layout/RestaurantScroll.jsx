@@ -17,7 +17,7 @@ const RestaurantScroll = ({data}) => {
       showsVerticalScrollIndicator={false}
       style={{ marginTop: 10, flex: 1, width: "100%" }}
     >
-      {data.map((item) => (
+      {data.map((item, index) => (
         <RestaurantCard key={item.id} card={item} height={175} />
       ))}
     </ScrollView>

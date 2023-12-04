@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  Text,
-  Surface,
-  Divider,
-  Button,
-  ActivityIndicator,
-} from "react-native-paper";
+import { Text, Surface, Divider } from "react-native-paper";
 import { useTheme } from "react-native-paper";
 import { useQuery } from "@tanstack/react-query";
 import {
   getCategoriasProductos,
-  getCategoriasProveedor,
-  getCategoriasRestaurante,
-  getProductosProveedor,
   getProductosRestaurante,
 } from "../../../context/services/useApi";
 import CategoriesChipScroll from "../../../components/layout/CategoriesChipScroll";
@@ -27,14 +18,14 @@ const RestaurantDetails = ({ route }) => {
   const { restaurant } = route.params;
   const id = restaurant.id;
   const [filteredProductos, setFilteredProductos] = useState([]);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   const [itemModal, setItemModal] = useState({});
   const [visible, setVisible] = useState(false);
 
   const showModal = (item) => {
     setItemModal(item);
-    setQuantity(0); // Initialize quantity when the modal is opened
+    setQuantity(1); // Initialize quantity when the modal is opened
     setVisible(true);
   };
 
@@ -67,9 +58,7 @@ const RestaurantDetails = ({ route }) => {
   };
 
   if (productos.status === "pending" || categorias.status === "pending") {
-    return (
-      <LoadingScreen/>
-    );
+    return <LoadingScreen />;
   }
 
   if (productos.status === "error") {
@@ -91,7 +80,7 @@ const RestaurantDetails = ({ route }) => {
         style={[styles.container, { backgroundColor: theme.colors.background }]}
       >
         <View style={styles.topContainer}>
-          <Header object={restaurant} />
+          <Header object={restaurant} tipo="restaurante" />
         </View>
         <View style={styles.bottomContainer}>
           <Surface style={styles.surface} elevation={2}>
@@ -102,12 +91,7 @@ const RestaurantDetails = ({ route }) => {
             data={categorias.data}
             onPress={handleCategoriaPress}
           />
-          <ProductGallery
-            data={filteredProductos}
-            height={100}
-            width={100}
-            onPress={showModal}
-          />
+          <ProductGallery data={filteredProductos} onPress={showModal} />
         </View>
       </View>
     </>
@@ -146,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RestaurantDetails
+export default RestaurantDetails;

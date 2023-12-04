@@ -15,6 +15,9 @@ import ProveedorDetails from "../screens/logedScreens/proveedor/ProveedorDetails
 // Hooks and Contexts
 import { useAuthContext } from "../hooks/useAuthContext";
 import { CartProvider } from "../context/CartContext";
+import MyOrders from "../screens/logedScreens/orders/MyOrders";
+import MyReviews from "../screens/logedScreens/reviews/MyReviews";
+import Reviews from "../screens/logedScreens/reviews/Reviews";
 
 const Stack = createStackNavigator();
 
@@ -42,6 +45,9 @@ const NavigationHolder = () => {
             <Stack.Screen name="Cart" component={CartScreen} />
             <Stack.Screen name="RestaurantDetails" component={RestaurantDetails} />
             <Stack.Screen name="ProveedorDetails" component={ProveedorDetails} />
+            <Stack.Screen name="MyOrders" component={MyOrders} />
+            <Stack.Screen name="MyReviews" component={MyReviews} />
+            <Stack.Screen name="Reviews" component={Reviews} />
           </Stack.Navigator>
         </CartProvider>
       </>
