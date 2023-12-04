@@ -1,7 +1,8 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
-import { Text, Button, Portal, Modal, useTheme } from "react-native-paper";
+import { Text, Button, Portal, Modal, useTheme, FAB } from "react-native-paper";
 import { useCartContext } from "../../hooks/useCartContext";
+import { useNavigation } from "@react-navigation/native";
 
 const OrderModal = ({
   visible,
@@ -11,6 +12,7 @@ const OrderModal = ({
   setQuantity,
 }) => {
   const theme = useTheme();
+  const navigation = useNavigation();
   const { handleAddItem } = useCartContext();
 
   return (
@@ -25,7 +27,27 @@ const OrderModal = ({
         ]}
       >
         <View style={styles.modalContent}>
-          <Image source={{ uri: itemModal.image }} style={styles.imageModal} />
+          <View style={styles.imageContainer}>
+            <Image
+              source={{ uri: itemModal.image }}
+              style={styles.imageModal}
+            />
+            <FAB
+              style={styles.fab}
+              mode="elevated"
+              icon="message-draw"
+              size="small"
+              onPress={() => {
+                navigation.navigate("Reviews", {
+                  item: itemModal,
+                  tipo: "producto",
+                });
+                hideModal();
+              }}
+              color="white"
+              theme={{ colors: { primaryContainer: theme.colors.tertiary } }}
+            />
+          </View>
           <Text variant="headlineLarge">{itemModal.nombre}</Text>
           <Text variant="bodyMedium">{itemModal.descripcion}</Text>
           <Text variant="bodyMedium">
@@ -73,10 +95,22 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginBottom: 20,
   },
-  imageModal: {
-    borderRadius: 10,
+  imageContainer: {
+    position: "relative",
     width: "100%",
     height: 250,
+    borderRadius: 10,
+    overflow: "hidden",
+    marginBottom: 20,
+  },
+  imageModal: {
+    width: "100%",
+    height: "100%",
+  },
+  fab: {
+    position: "absolute",
+    top: 10,
+    right: 10,
   },
   quantityContainer: {
     paddingTop: 10,

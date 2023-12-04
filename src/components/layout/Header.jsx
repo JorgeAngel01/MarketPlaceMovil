@@ -2,12 +2,13 @@ import React from "react";
 import { StyleSheet, View} from "react-native";
 import {
   Card,
+  FAB,
   IconButton,
   useTheme,
 } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
-const Header = ({object}) => {
+const Header = ({object, tipo}) => {
     const navigation = useNavigation();
     const theme = useTheme();
 
@@ -25,7 +26,24 @@ const Header = ({object}) => {
             style={{ left: -10 }}
           />
         </View>
-        <View style={styles.cardBottom}></View>
+        <View style={styles.cardBottom}>
+        <FAB
+            mode="elevated"
+            icon="message-draw"
+            size="small"
+            onPress={() => navigation.navigate("Reviews", {item: object, tipo: tipo})}
+            color="white"
+            theme = {{colors: {primaryContainer: theme.colors.tertiary}}}
+          />
+          <FAB
+            mode="elevated"
+            icon="map-marker"
+            size="small"
+            onPress={() => console.log("Pressed")}
+            color="white"
+            theme = {{colors: {primaryContainer: theme.colors.primary}}}
+          />
+        </View>
       </Card.Content>
     </Card>
   );
@@ -54,17 +72,18 @@ const styles = StyleSheet.create({
     },
     cardTop: {
       flexDirection: "row",
-      justifyContent: "flex-start",
+      justifyContent: "space-between",
       alignItems: "flex-start",
       width: "100%",
       paddingTop: 10,
     },
     cardBottom: {
-      flexDirection: "column",
+      flexDirection: "row",
       justifyContent: "flex-end",
       alignItems: "flex-start",
       width: "100%",
       padding: 10,
+      gap: 10,
     },
   });
 

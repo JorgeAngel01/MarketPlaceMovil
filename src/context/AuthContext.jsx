@@ -17,6 +17,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [userData, setUserData] = useState(null); 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const queryClient = useQueryClient();
@@ -127,23 +128,23 @@ const AuthProvider = ({ children }) => {
       const userName = user;
       console.log("UserName: ", userName);
 
-      const userData = useQuery({
+      const getUserData = useQuery({
         queryKey: ["user", userName],
         queryFn: () => getUsuario(userName),
       });
     
       useEffect(() => {
-        if (userData.isSuccess) {
+        if (getUserData.isSuccess) {
           // Ensure userData.data is not null or undefined
-          if (userData.data && userData.data.user_id) {
-            setUserId(userData.data.user_id);
-            console.log("UserId: ", userId);
+          if (getUserData.data && getUserData.data.user_id) {
+            setUserId(getUserData.data.user_id);
+            setUserData(getUserData.data);
           } else {
             // Log an error or handle the case where userData.data is not as expected
-            console.error("User data is missing or does not have an 'id' property:", userData.data);
+            console.error("User data is missing or does not have an 'id' property:", getUserData.data);
           }
         }
-      }, [userData.isSuccess, userData.data]);
+      }, [getUserData.isSuccess, getUserData.data]);
 
       const values = {
         user,

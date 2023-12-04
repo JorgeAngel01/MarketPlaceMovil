@@ -85,7 +85,7 @@ const ProveedorScreen = ({ route }) => {
         style={[styles.container, { backgroundColor: theme.colors.background }]}
       >
         <View style={styles.topContainer}>
-          <Header object={proveedor} />
+          <Header object={proveedor} tipo="proveedor"/>
         </View>
         <View style={styles.bottomContainer}>
           <Surface style={styles.surface} elevation={2}>

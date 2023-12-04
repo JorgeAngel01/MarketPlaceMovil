@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 import CartItem from "../../../components/atoms/CartItem";
-import { Text, Button, Icon, IconButton } from "react-native-paper";
+import { Text, Button, Icon, IconButton, Title, Divider } from "react-native-paper";
 import { useTheme } from "react-native-paper";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useQuery } from "@tanstack/react-query";
@@ -17,9 +17,10 @@ const CartScreen = () => {
   const theme = useTheme();
   const navigation = useNavigation();
   const { user } = useAuthContext();
-  const { handleUpdateQuantity, handleUpdateEstado, handleRemoveCartItem } = useCartContext();
+  const { handleUpdateQuantity, handleUpdateEstado, handleRemoveCartItem } =
+    useCartContext();
   const [cartArray, setCartArray] = useState([]);
-  const [total , setTotal] = useState(0);
+  const [total, setTotal] = useState(0);
 
   const orden = useQuery({
     queryKey: ["orden", user],
@@ -28,7 +29,11 @@ const CartScreen = () => {
 
   const ordenId = orden.data?.id;
 
-  const { data: cartItems, isSuccess, refetch } = useQuery({
+  const {
+    data: cartItems,
+    isSuccess,
+    refetch,
+  } = useQuery({
     queryKey: ["id", ordenId],
     queryFn: () => getItemsOrden(ordenId),
     enabled: !!ordenId,
@@ -42,10 +47,10 @@ const CartScreen = () => {
   }, [isSuccess]);
 
   useEffect(() => {
-    if(orden.isSuccess) {
+    if (orden.isSuccess) {
       setTotal(orden.data.precio_total);
     }
-  }, [orden.isSuccess])
+  }, [orden.isSuccess]);
 
   const handleOnBuy = (estado) => {
     handleUpdateEstado(estado);
@@ -81,11 +86,10 @@ const CartScreen = () => {
           onPress={() => navigation.goBack()}
           style={{ left: -10 }}
         />
-        <Text variant="headlineLarge" style={styles.title}>
-          Cart
-        </Text>
-        <View style={{ width: 30 }} />
+        <Title>My Cart</Title>
+        <View style={{ width: 30,  marginLeft: 15 }} />
       </View>
+      <Divider style={styles.divider} />
       <ScrollView>
         {isSuccess &&
           cartArray.map((item) => (
@@ -124,6 +128,11 @@ const styles = StyleSheet.create({
     marginVertical: 12,
     marginHorizontal: 10,
   },
+  divider: {
+    width: "100%",
+    height: 1,
+    marginBottom: 12,
+  },
   title: {
     textAlign: "center",
     fontWeight: "bold",
@@ -136,7 +145,7 @@ const styles = StyleSheet.create({
 
 export default CartScreen;
 
-  /* const handleUpdateQuantity = (itemId, newQuantity) => {
+/* const handleUpdateQuantity = (itemId, newQuantity) => {
     setCartArray(
     cartItems.map((item) =>
     .id === itemId ? { ...item, cantidad: newQuantity } : item
